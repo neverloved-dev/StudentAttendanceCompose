@@ -9,5 +9,6 @@ data class User(
     val name:String,
     val lastName:String,
     val specialty:String,
-    val subject:String
+    val subject:String,
+    val photoUrl:String
 )
