@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Group(
     val id:Int,
     val name:String,
-    val students:List<Student>
+    val students: MutableList<User>
 )

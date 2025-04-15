@@ -1,5 +1,6 @@
 package com.example.studentattendance.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.studentattendance.ui.theme.StudentAttendanceTheme
@@ -46,6 +48,7 @@ fun ProfileScreen() {
     var specialization by remember { mutableStateOf("") }
     var photoUrl by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,18 +76,20 @@ fun ProfileScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Login Button
         Button(
             onClick = {
+                val intent =  Intent(context,GroupListActivity::class.java)
+                context.startActivity(intent)
             },
             modifier = Modifier.padding(5.dp), colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF3583A8)
-            )
+                    )
+
         ) {
             Text("Сохранить")
         }
     }
-    }
+}
 
 
 @Preview(showBackground = true)

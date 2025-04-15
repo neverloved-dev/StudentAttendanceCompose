@@ -1,5 +1,6 @@
 package com.example.studentattendance.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,11 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 
 
 class LoginActivity : ComponentActivity(){
@@ -48,7 +51,7 @@ fun LoginApp() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
-
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,6 +110,8 @@ fun LoginApp() {
                     // Handle login logic here
                     errorMessage = ""
                 }
+              val intent =  Intent(context,GroupListActivity::class.java)
+                    context.startActivity(intent)
             },
             modifier = Modifier.padding(5.dp), colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF3583A8)
