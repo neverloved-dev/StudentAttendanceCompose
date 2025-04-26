@@ -2,9 +2,12 @@ package com.example.studentattendance.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -288,6 +291,8 @@ fun GroupListScreen(){
                         val intent = Intent(context, GroupDetailsActivity::class.java).apply {
                             putExtra("groupName", group.name)
                             putExtra("groupStudents",ArrayList(group.students))
+                            Log.d("GroupCard", "Card clicked: ${group.name}")
+                            Toast.makeText(context, "Clicked ${group.name}", Toast.LENGTH_SHORT).show()
                         }
                         context.startActivity(intent)
                     })
@@ -303,7 +308,8 @@ fun groupCard(group: Group,onClick: (Group) -> Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable {  onClick(group) },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {

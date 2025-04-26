@@ -1,6 +1,8 @@
 package com.example.studentattendance.activities
 
+import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,10 +41,10 @@ class GroupDetailsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val groupName = intent.getStringExtra("groupName") as String?:"Group"
-        val groupStudentList = intent.getSerializableExtra("studentList") as? ArrayList<User>?: arrayListOf()
+        val groupStudentList = intent.getSerializableExtra("groupStudents") as? ArrayList<User>?: arrayListOf()
         setContent {
             StudentAttendanceTheme {
-                    GroupDetailsScreen(groupName,groupStudentList)
+                    groupDetailsScreen(groupName,groupStudentList)
             }
         }
     }
@@ -48,9 +52,23 @@ class GroupDetailsActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GroupDetailsScreen(groupName:String, studentGroupList: ArrayList<User>){
+fun groupDetailsScreen(groupName:String, studentGroupList: ArrayList<User>){
     var selectedOption by remember { mutableStateOf("Absent") }
+    val context = LocalContext.current as Activity
     Scaffold(
+        bottomBar = {
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Data sent successfully", Toast.LENGTH_SHORT).show()
+                    context.finish() // Go back to previous activity
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text("Submit")
+            }
+        },
         topBar = {
             TopAppBar(title = { Text(groupName) })
         },
@@ -86,6 +104,7 @@ fun GroupDetailsScreen(groupName:String, studentGroupList: ArrayList<User>){
             }
         }
     )
+
 }
 
 @Composable
@@ -155,5 +174,5 @@ fun showGroupDetailsScreen(){
             photoUrl = "https://example.com/photos/mrodriguez.jpg"
         )
     )
-    GroupDetailsScreen(groupName, studentList)
+    groupDetailsScreen(groupName, studentList)
 }
